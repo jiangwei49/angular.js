@@ -2,7 +2,6 @@
 
 var fs = require('fs');
 var path = require('path');
-var url = require('url');
 
 var root = path.resolve(__dirname, '..');
 var tests = path.resolve(root, 'fixtures');
@@ -24,6 +23,10 @@ function testExists(testname) {
 }
 
 function rewriteTestFile(testname, testfile) {
+  if (testfile.search(/^https?:\/\//) === 0) {
+    return testfile;
+  }
+
   var i = 0;
   while (testfile[i] === '/') ++i;
   testfile = testfile.slice(i);
